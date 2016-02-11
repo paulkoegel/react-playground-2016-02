@@ -1,0 +1,2 @@
+nwb new react-app react-basics
+nwb serve --auto-install --port 8080 --reload --fallback
