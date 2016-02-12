@@ -1,7 +1,7 @@
 import React from 'react';
-import bookData from '../bookData';
+import bookData from './bookData';
 
-// STEP 1
+// STEP 1 - - - - - - -
 
 class Book extends React.Component {
   render() {
@@ -20,7 +20,7 @@ class Book extends React.Component {
 export default () => {
   return <Book {...bookData} />
 }
-
+// - - - END STEP 1 - - -
 
 
 // + state vs props: props can't be changed
@@ -33,7 +33,7 @@ export default () => {
 
 
 
-// STEP 2
+// STEP 2 - - - - - - -
 
 // class Book extends React.Component {
 //
@@ -89,7 +89,7 @@ export default () => {
 //   price: React.PropTypes.number,
 //   image: React.PropTypes.string,
 //   text: React.PropTypes.string //.required
-// }
+// };
 //
 //
 // // -- -- -- -- BONUS -- -- -- -- --
@@ -104,7 +104,11 @@ export default () => {
 // //
 // //   static propTypes = {
 // //   }
-//
-// export default () => {
-//   return <Book {...bookData} />
-// }
+
+
+// - - - - - END STEP 2 - - - - -
+
+
+export default () => {
+  return <Book {...bookData} />
+}

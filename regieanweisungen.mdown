@@ -1,0 +1,23 @@
+### A simple UI in plain JavaScript
++ [https://jsbin.com/ziboba/edit?html,js,output](https://jsbin.com/ziboba/edit?html,js,output)
+
+### ... and the same with JSX
++ [https://jsbin.com/rahidi/edit?html,js,output](https://jsbin.com/rahidi/edit?html,js,output)
++ remove quotes
++ JS console error: `Expected an identifier and instead saw '<'.`
++ JSX is not part of HTML
+
++ switch to ES6/Babel
++ add React library
++ (BONUS: show Babel REPL)
+
++ proper setup: [https://jsbin.com/cewipo/edit?html,js,output](https://jsbin.com/cewipo/edit?html,js,output)
+
++ output: [object Object]
++ let's try wrapping `PrintTitleJSX(...)` in `JSON.stringify`.
++ JSX renders not strings but JS objects.
+
++ cannot use `innerHTML=` need to add special React function: `ReactDOM.render`
+
+
+
