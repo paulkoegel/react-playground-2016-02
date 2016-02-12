@@ -1,2 +1,11 @@
-nwb new react-app react-basics
-nwb serve --auto-install --port 8080 --reload --fallback
+# Setup
+
+npm install -g nwb
+
+git clone https://github.com/paulkogel/...
+
+oder:
+
+nwb new react-app react-essen-2016
+
+nwb serve --auto-install --port 3000 --reload --fallback

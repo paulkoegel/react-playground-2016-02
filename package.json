@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "react": "0.14.x",
-    "react-dom": "0.14.x"
+    "react-dom": "0.14.x",
+    "react-router": "^2.0.0"
   },
   "devDependencies": {
-    "nwb": "0.7.x"
+    "nwb": "0.7.x",
+    "webpack-notifier": "^1.2.1"
   },
   "author": "",
   "license": "MIT",
