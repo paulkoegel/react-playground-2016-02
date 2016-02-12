@@ -1,0 +1,234 @@
+# 02 - React Basics
+
+---
+
+### Topics
+
+1. General background
+2. Hands-on:
+3. Virtual DOM
+
+---
+
+### Facts
+
++ released: summer 2013
++ Pete Hunt: ["Rethinking best Practices"](https://www.youtube.com/watch?v=x7cQ3mrcKaY), JSConf EU 2013
++ BSD license
++ Facebook, Instagram, Whatsapp, Yahoo, AirBnB, Khan Academy, Netflix, BBC, ...
+
+---
+
+### Expectation Management
+
+A JavaScript _library_ for building user interfaces.
+- React website
+
+???
++ not a framework
++ flexible tool
+
+---
+
+### Expectation Management
+
+_alien technology_
+![](https://paulkogel.github.io/mobile.cologne-2015-04-23-react/images/alman-rethink-best-practices.png)
+
++ React doesn't respect web standards
++ React breaks separation of concerns
++ JSX is a monstrosity
+
+???
++ alien technology: _too good to be true_ but also _foreign_
++ we need to get used to some of React's new ways - we've come a long way
+
+---
+
+### React Design Goals
+
+easier-to-reason-about & more maintainable code
+
+-> _simpler_ Code
+
+???
++ Rich Hickey: simple -vs- easy
+
+---
+
+### React Design Goals
+
++ encapsulate: components have own purpose and isolated state
++ composable: can nest components
++ reusable: components can be duplicated and imported in other contexts or apps
++ declarative: no imperative DOM updates, JSX template describes the UI
++ good performance by default
++ flexible tool: no framework lock-in
+
+---
+
+### React's building blocks
+
+1. component architecture (react.js)
+2. virtual DOM (react-dom.js)
+3. browser compatibility
+
+---
+
+Lego: isolated components
+
+---
+
+screenshot of finished books app with borders around components - this is what we'll be building!
+
+---
+
+```javascript
+// in Babel REPL
+
+document.body.innerHTML = '<h1>Gödel Escher Bach</h1>';
+
+let printTitle = (title) => { return '<h1>' + title + '</h1>' };
+document.body.innerHTML = printTitle('Gödel Escher Bach');
+
+
+
+// with JSX: strip the quotation marks!
+document.body.innerHTML = <h1>Gödel Escher Bach</h1>
+
+let printTitleJSX = (title) => { return <h1>{ title }</h1> };
+document.body.innerHTML = printTitleJSX('Gödel Escher Bach');
+
+
+// doesn't really render, though, b/c JSX doesn't return a string :(
+
+ReactDOM.render(printTitleWithJSXInside('Gödel Escher Bach'), document.body);
+
+
+// call printTitle via JSX
+
+// need to destructure props in printTitle
+// JSX attribute kommen alle zusammen als Objekt-Parameter rein
+let printTitleJSX = ({ title }) => { return <h1>hello { title }</h1> };
+ReactDOM.render(<printTitle2 title='Gödel Escher Bach' />, document.body);
+
+
+// nächstes: Book mit expandable text -> brauchen State
+```
+
+---
+
+// a simple book component
+
+let Book = (props) => {
+  return <h1>{ props.title }</h1>
+};
+
+ReactDOM.render(<Book />, document.body);
+
+---
+
+book component with title, image and text props
+onClick: () => { setState({ expanded: true }); }
+
+showText() {
+  this.state.expanded ? this.props.text : `${ this.props.text.slice(0,20) }...`
+}
+render() { { showText() } }
+
+---
+
+How can all this work? What makes declarative render functions possible?
+
+-> previous solutions: two way data-binding
+simpler: Virtual DOM with diffing strategy
+
+---
+
+https://paulkogel.github.io/mobile.cologne-2015-04-23-react/images/davis-prismatic-example-01-before-cropped.png
+
+???
+["The challenges and benefits of a functional reactive frontend" by Ian Davis](https://www.youtube.com/watch?v=TihhFQjtiZU)
+
+---
+
+https://paulkogel.github.io/mobile.cologne-2015-04-23-react/images/davis-prismatic-example-02-after-cropped.png
+
+---
+
+What would be the _simplest_ way?
+
+???
++ ignored established best practices
+
+---
+
+rerender _everything_ on every update
+
+---
+
+But how can this ever work?
+
+---
+
+### Problems
++ bottle neck: DOM updates are slow
++ lose state (scroll position, form state)
+
+---
+
+https://paulkogel.github.io/mobile.cologne-2015-04-23-react/images/neo-virtual-dom.png
+
+---
+
+data → render function → VDOMn →
+
+---
+
+data → render function → VDOMn →
+diff(VDOMn, VDOMn-1) → DOM Updates
+
+???
++ VDOM = JS object
++ JSX emits JS objects, not strings
++ _minimal_ set of imperative change instructions is sent to the real DOM - all handled in the background for us
+
+---
+
+https://paulkogel.github.io/mobile.cologne-2015-04-23-react/images/doom3-react.png
+
+???
++ black & white diagram: Doom 3 Rendering Engine
++ blue-white bubbles: corresponding React elements
+
+---
+
+https://paulkogel.github.io/mobile.cologne-2015-04-23-react/images/monkeys-slow.gif
+
+???
++ top: input field with MathJax formula
++ left: React: formula never gets rerendered since their text doesn't change in the input
++ right: Backbone: formula gets rerendered, no _precise_ DOM Updates and hence less performant - we could adjust our Backbone code, but doing this in a complex app is murder
+
+---
+
+### Conceptual Gains
++ as if we were constantly rerendering the DOM - no need to think about DOM updates anymore
++ DOM has been abstracted away - JSX renders objects, we can change the rendering engine behind this from a DOM to a canvas, native UI, shell etc.
+
+### Performant thanks to
++ _precise_ updates of the real DOM
++ Facebook simplified DOM diffing from O(n³) to O(n)
+
+---
+
+### The name: "React"
+shim for a reactive DOM
+
+???
+the library as a whole is not truly reactive, as Andre Staltz keeps reminding us [http://staltz.com/dont-react/](http://staltz.com/dont-react/)
+
+---
+
+use minified production build for better performance
+uni-directional data flow: only from parent to child components

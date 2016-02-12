@@ -1,0 +1,66 @@
+Code
++ [01 - A Simple Component](https://jsbin.com/fajusuq/2/edit?html,js,output)
++ JS übersetzt in React.DOM
+React.DOM.h1({}, ...)
++ [02 - JSX](https://jsbin.com/cabude/edit?js,output)
++ [03 - 3 Ways to define a Component](https://jsbin.com/kiqexi/edit?html,js,output)
+https://toddmotto.com/react-create-class-versus-component
+
+
+[Smart & dumb components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.4s940h729)
+also: stateful -vs- stateless, classes -vs- functions, 
+
+pure components (cf. PureRenderMixin):
++ pure render method (for same state and props - no calls to external variables, the server, or `Math.random` in render)
++ no deep mutations in props or state - shallow comparison in shouldComponent is enough
++ can be both stateful and stateless
++ classes, functions, createClass
+
++ React & React DOM
+
++ minifizierte versionen laden für production optimizations! (in Webpack später `NODE_ENV` richtig setzen)
++ react-with-addons: siehe https://facebook.github.io/react/docs/addons.html - pureRenderMixin
+
+3 Arten eine Komponente zu schreiben:
+1. `let Book = React.createClass()` (nur damit ihr's kennt und lesen könnt - findet man noch viel in Codebeispielen)
+2. `class Book extends React.Component` (Standard) DON'T use inheritance! classes are controversial in ES6 & especially in a functional library like React. Shorter to write and "the new way". Ryan Florence still prefers createClass.
+3. `let Book = (props) => { return ... }` ([stateless functional components](https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html)
+use whenever you have a simple component without state (e.g. presentational components - but they can also have state)
+für  components, return gibt das zurück was sonst render zurückgeben würde) restrictions: no state, only a render method, no lifecycle hooks, default props via ES6 default arguments + destructuring, no performance optimizations (no shouldComponentUpdate)
+
+getInitialState
+
++ React nicht in den `<body>` rendern, da dort auch Bibliotheken wie Google Analytics hinschreiben
+
+
+JSX
++ Kommentare in JSX
++ return (
+  <div>...</div> // muss EIN oberstes Element haben, da es auf Funktionen mapt und da Return immer nur einen Wert zurückgeben kann
+)
++ conditionals (kein `{ if ... }` sondern nur `{ someCheck ? ... : ,,, }`
++ conditionals: zeig den namen des users an, wenn es einen user gibt: { user && user.name }
++ doppelte klammern injizieren objekte (z.b. als props): <Book book={{title: ..., author: ...}} />
+
+PureRenderMixin:
++ bei reiner render-Funktion (nicht component - sie kann state haben, aber "it renders the same result given the same props and state"): performanceboost
+
+
+
+
+
+-----
+
+Babel REPL
+kennt ihr schon:
+document.body.innerHTML = '<h1>hello</h1>';
+
+React (via Babel)
+document.body.innerHTML = <h1>hello</h1>;
+
+
+Stärken:
+- man lernt JavaScript, man kann überall JavaScript schreiben und hat mehr Kontrolle (vs Handlebars etc.)
+
+createClass: mixins, this richtig in methoden
+ES6 klassen: keine mixins, this falsch in methoden ;)
