@@ -8,46 +8,23 @@ class Book extends React.Component {
     this.state = {};
   }
 
-  wrapperStyles = {
-    fontFamily: 'sans-serif',
-    maxWidth: 900,
-    backgroundColor: '#eee',
-    outline: '1px solid black',
-    padding: 10,
-    marginBottom: 20
-  }
-
-  imageStyles = {
-    height: 150,
-    width: 110,
-    float: 'left',
-    marginRight: 20
-  }
-
-  h1Style = {
-    fontSize: 20
-  }
-
   handleClick() {
     this.setState({ ...this.state, expanded: !this.state.expanded });
-  }
-
-  addToCart() {
-    return;
   }
 
   render() {
     let { title, author, text, image, price } = this.props;
     return(
-      <div style={ this.wrapperStyles }>
-        <img src={ image } style= { this.imageStyles } />
-        <h1 style={ this.h1Style }>{ title }</h1>
+      <div className={ this.props.selected ? 'selected' : null }>
+        <img src={ image } />
+        <h1>{ title }</h1>
         <h2>{ author }</h2>
 
-        <button onClick={ this.addToCart.bind(this) }>
+        <button onClick={ () => { this.props.addToCart(title) } }>
           Add to Cart
         </button>
 
+        <h4><i>{ price || 'no price' }€</i></h4>
         <p onClick={ this.handleClick.bind(this) }>
           { this.state.expanded ? text : `${text.slice(0,140)} ...` }
         </p>
@@ -63,20 +40,43 @@ Book.defaultProps = {
 Book.propTypes = {
   title: React.PropTypes.string.required,
   author: React.PropTypes.string,
+  price: React.PropTypes.number,
   image: React.PropTypes.string,
   text: React.PropTypes.string
 };
 
 
-class Books extends React.Component {
+class BookList extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedTitle: null
+    };
+  }
+
+  addToCart(title) {
+    console.log('addToCart:', this, title);
+    this.setState({
+      ...this.state,
+      selectedTitle: title
+    });
+  }
+
   render() {
     return(
       <div>
         <h1>Book List</h1>
-        <ul style={{ listStyleType: 'none' }}>
-          { this.props.books.map((book) => {
-            return <li>
-              <Book {...book} />
+        <h2>
+          Selected: { ' ' }
+          <i>
+            { this.state.selectedTitle || 'none' }
+          </i>
+        </h2>
+        <ul className='bookGrid'>
+          { this.props.books.map((book, index) => {
+            return <li key={ index } className={ this.state.selectedTitle === book.title ? 'selected' : null }>
+              <Book { ...book } addToCart={ this.addToCart.bind(this) } />
             </li>
           }) }
         </ul>
@@ -87,5 +87,5 @@ class Books extends React.Component {
 
 
 export default () => {
-  return <Books books={ booksData } />
+  return <BookList books={ booksData } />
 }

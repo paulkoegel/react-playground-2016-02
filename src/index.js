@@ -2,12 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
 
+import styles from './styles/app.css';
+
 import App from './App';
 import One_BookPage from './01-BookPage';
 import Two_BookPage from './02-BookPage';
 import Three_BookPage from './03-BookPage';
 import Four_BookPage from './04-BookPage';
 import Five_BookPage from './05-BookPage';
+
+
 
 window.React = React;
 window.ReactDOM = ReactDOM;
