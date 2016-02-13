@@ -5,7 +5,7 @@ class Book extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {}; // initialise state
   }
 
   handleClick() {
@@ -39,6 +39,20 @@ Book.propTypes = {
   image: React.PropTypes.string,
   text: React.PropTypes.string //.required
 };
+
+
+// -- -- -- -- BONUS -- -- -- -- --
+
+// 1. could avoid `bind` for `handleClick` with ES7's:
+// handleClick = () => { ... }
+
+// 2. alternative ES7 syntax for defaultProps and propTypes:
+// class Book ...
+//   static defaultProps = { // `static` b/c they are class properties, `=` makes them properties
+//   }
+//
+//   static propTypes = {
+//   }
 
 export default () => {
   return <Book {...bookData} />

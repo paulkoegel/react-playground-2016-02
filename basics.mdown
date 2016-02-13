@@ -5,7 +5,7 @@
 ### Topics
 
 1. General background
-2. Hands-on:
+2. Hands-on
 3. Virtual DOM
 
 ---
