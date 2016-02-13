@@ -88,11 +88,11 @@ export default () => {
 // // `React.PropTypes.any.isRequired` - provide anything, but it has to be something
 //
 // Book.propTypes = {
-//   title: React.PropTypes.string.required, // all keys are optional by default
+//   title: React.PropTypes.string.isRequired, // all keys are optional by default
 //   author: React.PropTypes.string,
 //   price: React.PropTypes.number,
 //   image: React.PropTypes.string,
-//   text: React.PropTypes.string //.required
+//   text: React.PropTypes.string //.isRequired
 // };
 
 

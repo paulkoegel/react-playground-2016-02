@@ -34,7 +34,7 @@ Book.defaultProps = {
 };
 
 Book.propTypes = {
-  title: React.PropTypes.string.required,
+  title: React.PropTypes.string.isRequired,
   author: React.PropTypes.string,
   price: React.PropTypes.number,
   image: React.PropTypes.string,
