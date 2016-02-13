@@ -1,5 +1,5 @@
 import React from 'react';
-import bookData from './bookData';
+import bookData from './data/book';
 
 // STEP 1 - - - - - - -
 
@@ -20,6 +20,7 @@ class Book extends React.Component {
 export default () => {
   return <Book {...bookData} />
 }
+
 // - - - END STEP 1 - - -
 
 
@@ -28,6 +29,9 @@ export default () => {
 // + add default prop price
 // + validate props (comment out `text` in bookData and see what happens...)
 // + add state, set default state
+
+
+
 
 
 

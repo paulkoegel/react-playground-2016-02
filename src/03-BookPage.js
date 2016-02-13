@@ -1,8 +1,7 @@
 import React from 'react';
-import bookData from './bookData';
+import bookData from './data/books';
 
 class Book extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {};

@@ -1,5 +1,5 @@
 import React from 'react';
-import bookData from './bookData';
+import bookData from './data/book';
 
 // STEP 1
 
