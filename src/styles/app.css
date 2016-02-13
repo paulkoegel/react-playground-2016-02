@@ -59,6 +59,7 @@ button {
   padding: 20px;
   background: #eee;
   min-height: 522px;
+  min-width: 193px;
 }
 
 .bookGrid li:last-child {

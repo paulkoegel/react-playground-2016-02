@@ -1,5 +1,5 @@
 import React from 'react';
-import booksData from './data/books';
+import bookListData from './data/bookList';
 
 
 class Book extends React.Component {
@@ -48,8 +48,8 @@ class BookList extends React.Component {
       <div>
         <h1>Book List</h1>
         <ul className='bookGrid'>
-          { this.props.books.map((book) => {
-            return <li>
+          { this.props.books.map((book, index) => {
+            return <li key={ index }>
               <Book {...book} />
             </li>
           }) }
@@ -61,5 +61,5 @@ class BookList extends React.Component {
 
 
 export default () => {
-  return <BookList books={ booksData } />
+  return <BookList books={ bookListData } />
 }

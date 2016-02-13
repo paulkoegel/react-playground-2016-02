@@ -1,5 +1,5 @@
 import React from 'react';
-import booksData from './data/books';
+import bookListData from './data/bookList';
 
 
 class Book extends React.Component {
@@ -21,7 +21,7 @@ class Book extends React.Component {
         <h2>{ author }</h2>
 
         <button onClick={ () => { this.props.addToCart(title) } }>
-          Add to Cart
+          Put in cart
         </button>
 
         <h4><i>{ price || 'no price' }€</i></h4>
@@ -68,9 +68,9 @@ class BookList extends React.Component {
       <div>
         <h1>Book List</h1>
         <h2>
-          Selected: { ' ' }
+          Cart Item: { ' ' }
           <i>
-            { this.state.selectedTitle || 'none' }
+            { this.state.selectedTitle || '- empty -' }
           </i>
         </h2>
         <ul className='bookGrid'>
@@ -87,5 +87,5 @@ class BookList extends React.Component {
 
 
 export default () => {
-  return <BookList books={ booksData } />
+  return <BookList books={ bookListData } />
 }
