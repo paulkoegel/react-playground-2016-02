@@ -46,7 +46,7 @@ Book.propTypes = {
   author: React.PropTypes.string,
   price: React.PropTypes.number,
   image: React.PropTypes.string,
-  text: React.PropTypes.string
+  text: React.PropTypes.string.isRequired
 };
 
 
@@ -56,7 +56,8 @@ class BookList extends React.Component {
     super(props);
     this.state = {
       selectedTitle: null,
-      showForm: false
+      showForm: false,
+      books: props.books
     };
   }
 
@@ -69,10 +70,12 @@ class BookList extends React.Component {
   }
 
   addBook() {
+    console.log('addBook');
     this.setState({
       ... this.state,
-      book: [ { title: 'edit me'}, ...this.state.books ]
+      books: [ { title: 'edit me', text: 'some description'}, ...this.state.books ]
     });
+    console.log('end addBook');
   }
 
   render() {
@@ -91,7 +94,7 @@ class BookList extends React.Component {
         </button>
 
         <ul className='bookGrid'>
-          { this.props.books.map((book, index) => {
+          { this.state.books.map((book, index) => {
             return <li key={ index } className={ this.state.selectedTitle === book.title ? 'selected' : null }>
               <Book { ...book } addToCart={ this.addToCart.bind(this) } />
             </li>
