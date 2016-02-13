@@ -27,9 +27,11 @@ Ulysses chronicles the peripatetic appointments and encounters of Leopold Bloom 
   },
 
   {
-    title: 'Sein & Zeit',
-    author: 'Martin Heidegger',
-    image: 'https://upload.wikimedia.org/wikipedia/en/3/33/Being_and_Time_%28German_edition%29.jpg',
-    text: `Martin Heidegger (/ˈhaɪdɛɡər, -dɪɡər/;[6] German: [ˈmaɐ̯tiːn ˈhaɪdɛɡɐ]; 26 September 1889 – 26 May 1976) was a German philosopher and a seminal thinker in the Continental tradition and philosophical hermeneutics, with a growing influence on Analytic philosophy. According to the IEP, he is "widely acknowledged to be one of the most original and important philosophers of the 20th century."[7] Heidegger is best known for his contributions to Phenomenology and Existentialism, though as the SEP cautions, "his thinking should be identified as part of such philosophical movements only with extreme care and qualification."[8]`
+    title: 'Shop Class as Soulcraft',
+    author: 'Matthew B. Crawford',
+    image: 'http://ecx.images-amazon.com/images/I/51PlFrZwmxL._SY344_BO1,204,203,200_.jpg',
+    text: `Shop Class as Soulcraft brings alive an experience that was once quite common, but now seems to be receding from society-the experience of making and fixing things with our hands. Those of us who sit in an office often feel a lack of connection to the material world, a sense of loss, and find it difficult to say exactly what we do all day. For anyone who felt hustled off to college, then to the cubicle, against their own inclinations and natural bents, Shop Class as Soulcraft seeks to restore the honor of the manual trades as a life worth choosing.
+
+On both economic and psychological grounds, Crawford questions the educational imperative of turning everyone into a "knowledge worker," based on a misguided separation of thinking from doing, the work of the hand from that of the mind. Crawford shows us how such a partition, which began a century ago with the assembly line, degrades work for those on both sides of the divide.`
   }
 ]
