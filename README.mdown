@@ -1,11 +1,10 @@
 # Setup
 
-npm install -g nwb
+1. `npm install -g nwb`
 
-git clone https://github.com/paulkogel/...
+2. `git clone https://github.com/paulkogel/react-playground-2016-02`
 
-oder:
+3. `nwb serve --auto-install --port 3000 --reload --fallback`
 
-nwb new react-app react-essen-2016
-
-nwb serve --auto-install --port 3000 --reload --fallback
+This repo was created with:
+`nwb new react-app react-playground-2016-02`
