@@ -42,10 +42,15 @@ ul {
 
 button {
   cursor: pointer;
+  font-size: 20px;
+  background: #5E7CB6;
+  border: 1px solid darkblue;
+  color: white;
 }
 
 .bookGrid {
   display: flex;
+  align-items: flex-start;
 }
 
 .bookGrid li {
@@ -53,6 +58,7 @@ button {
   outline: 1px solid #999;
   padding: 20px;
   background: #eee;
+  min-height: 522px;
 }
 
 .bookGrid li:last-child {
@@ -78,4 +84,10 @@ button {
 .bookGrid li.selected {
   background-color: #777;
   color: #fafafa;
+}
+
+.bookGrid p {
+  cursor: pointer;
+  user-select: none;
+  -moz-user-select: none;
 }
