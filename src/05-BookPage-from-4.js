@@ -4,22 +4,55 @@ import _ from 'lodash';
 
 
 class Book extends React.Component {
+
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      editing: false,
+      expanded: false
+    };
   }
 
   handleClick() {
     this.setState({ expanded: !this.state.expanded });
   }
 
+  enterEditMode() {
+    console.log('enterEditMode');
+    this.setState({ editing: true });
+  }
+
+  saveBook() {
+    this.setState({ editing: false });
+    this.props.saveBook(this.props.id, this.refs.title.value, this.refs.author.value);
+  }
+
+  renderTitleAndAuthor() {
+    if(this.state.editing) {
+      return <div>
+        { /* onChange={ this.changeTitle.bind(this) } -- for input validations */ }
+        <input ref='title' defaultValue={ this.props.title } type='text' />
+        <input ref='author' defaultValue={ this.props.author } type='text' />
+        <button onClick={ this.saveBook.bind(this) }>Save</button>
+        { /*  this.state.isValid && <button onClick={ this.saveBook.bind(this) }>Save</button> } */ }
+      </div>
+
+    } else {
+      return <div>
+        <h1 onClick={ this.enterEditMode.bind(this) }>{ this.props.title }</h1>
+        <h2 onClick={ this.enterEditMode.bind(this) }>{ this.props.author }</h2>
+      </div>
+    }
+  }
+
   render() {
     let { id, title, author, text, image, price } = this.props;
+    console.log('editing?', this.state.editing);
     return(
       <div>
-        <img src={ image } />
-        <h1>{ title }</h1>
-        <h2>{ author }</h2>
+        <img src={ image || 'http://placekitten.com/150/110' } />
+        { this.renderTitleAndAuthor.bind(this)() }
+        
 
         <button onClick={ () => { this.props.addToCart(id) } }>
           Put in cart
@@ -67,10 +100,11 @@ class BookList extends React.Component {
   }
 
   addBook() {
+    console.log(this.state, this.state.books.length + 1);
     this.setState({ // !!! need to repeat this.state.books - automerge doesn't work for nested structures
       books: {
         ...this.state.books,
-        [this.state.books.length + 1]: {
+        [Object.keys(this.state.books).length + 1]: {
           title: 'edit me',
           author: 'John Doe',
           text: 'some description'
@@ -85,6 +119,18 @@ class BookList extends React.Component {
     });
   }
 
+  saveBook(id, title, author) {
+    let books = {
+      ...this.state.books,
+      [id]: { // !!!
+        ...this.state.books[id],
+        title,
+        author
+      }
+    };
+
+    this.setState({ books }) //object literal shorthand
+  }
 
   render() {
     const selectedBook = this.state.books[this.state.selectedId];
@@ -112,6 +158,7 @@ class BookList extends React.Component {
                   id={ bookId }
                   addToCart={ this.addToCart.bind(this) }
                   handleRemove={ this.removeBook.bind(this) }
+                  saveBook={ this.saveBook.bind(this) }
                 />
               </li>
             }) 
