@@ -76,7 +76,10 @@ class BookList extends React.Component {
           { Object.keys(this.props.books).map((bookId, index) => {
             let book = this.props.books[bookId];
             return <li key={ index } className={ this.state.selectedId === bookId ? 'selected' : null }>
-              <Book { ...book } id={ bookId } addToCart={ this.addToCart.bind(this) } />
+              <Book { ...book }
+                id={ bookId }
+                addToCart={ this.addToCart.bind(this) }
+              />
             </li>
           }) }
         </ul>
