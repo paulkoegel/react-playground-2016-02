@@ -46,7 +46,7 @@ Book.propTypes = {
   author: React.PropTypes.string,
   price: React.PropTypes.number,
   image: React.PropTypes.string,
-  text: React.PropTypes.string
+  text: React.PropTypes.string // isRequired
 };
 
 
@@ -66,6 +66,12 @@ class BookList extends React.Component {
     });
   }
 
+  addBook() {
+    // this.setState({
+    //   books: { { title: 'edit me', text: 'some description'}, ...this.state.books ]
+    // });
+  }
+
   removeBook(bookId) {
     this.setState({
       books: _.omit(this.state.books, bookId)
@@ -74,7 +80,9 @@ class BookList extends React.Component {
 
 
   render() {
-    let selectedBook = this.state.books[this.state.selectedId];
+    const selectedBook = this.state.books[this.state.selectedId];
+    const sortedBookIDs = _.sortBy(Object.keys(this.state.books).map(bookId => parseInt(bookId, 10)), el => el).reverse();
+
     return(
       <div>
         <h1>Book List</h1>
@@ -85,16 +93,17 @@ class BookList extends React.Component {
           </i>
         </h2>
         <ul className='bookGrid'>
-          { Object.keys(this.state.books).map((bookId, index) => {
-            let book = this.state.books[bookId];
-            return <li key={ index } className={ this.state.selectedId === bookId ? 'selected' : null }>
-              <Book { ...book }
-                id={ bookId }
-                addToCart={ this.addToCart.bind(this) }
-                handleRemove={ this.removeBook.bind(this) }
-              />
-            </li>
-          }) }
+          { sortedBookIDs.map((bookId, index) => {
+              let book = this.state.books[bookId];
+              return <li key={ index } className={ this.state.selectedId === bookId ? 'selected' : null }>
+                <Book { ...book }
+                  id={ bookId }
+                  addToCart={ this.addToCart.bind(this) }
+                  handleRemove={ this.removeBook.bind(this) }
+                />
+              </li>
+            }) 
+          }
         </ul>
       </div>
     );
