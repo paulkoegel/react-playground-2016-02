@@ -13,16 +13,49 @@ class Book extends React.Component {
   }
 
   handleClick() {
-    this.setState({ ...this.state, expanded: !this.state.expanded });
+    this.setState({ expanded: !this.state.expanded });
+  }
+
+  changeTitle({ target: { value } }) {
+    return;
+    // this.setState({
+    //   isValid: value <= 50
+    // });
+  }
+
+  changeAuthor({ target: { value } }) {
+    return;
+  }
+
+  enterEditMode() {
+    this.setState({ editing: true });
+  }
+
+  saveBook() {
+    this.props.saveBook(this.props.id, this.refs.title.value, this.refs.author.value)
+    this.setState({ editing: false });
   }
 
   render() {
     let { title, author, text, image, price } = this.props;
     return(
+      // multiple classes: className={ [ (this.props.selected ? 'selected' : null), (this.state.fadeOut ? 'fadeOut' : null) ].join(' ') }
       <div className={ this.props.selected ? 'selected' : null }>
         <img src={ image } />
-        <h1>{ title }</h1>
-        <h2>{ author }</h2>
+        { /*{ this.props.editing ?
+          <div>
+            <h1 onClick={ enterEditMode.bind(this) }>{ title }</h1>
+            <h2 onClick={ enterEditMode.bind(this) }>{ author }</h2>
+          </div>
+          :
+          <div>
+            <input ref='title' onChange={ this.changeTitle.bind(this) } defaultValue={ this.props.title } type='text' />
+            <input ref='author' onChange={ this.changeAuthor.bind(this) } defaultValue={ this.props.author } type='text' />
+            { <button onClick={ this.saveBook.bind(this) }>Save</button> }
+            { { this.state.isValid && <button onClick={ this.saveBook.bind(this) }>Save</button> } }
+          </div>
+         }
+  */ }
 
         <button onClick={ () => { this.props.addToCart(title) } }>
           Put in cart
@@ -32,6 +65,9 @@ class Book extends React.Component {
         <p onClick={ this.handleClick.bind(this) }>
           { this.state.expanded ? text : `${text.slice(0,140)} ...` }
         </p>
+        <div className='close' onClick={ () => this.props.handleRemove(this.props) }>
+          x
+        </div>
       </div>
     );
   }
@@ -55,27 +91,44 @@ class BookList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTitle: null,
+      selectedId: null,
       showForm: false,
       books: props.books
     };
   }
 
-  addToCart(title) {
-    console.log('addToCart:', this, title);
+  addToCart(id) {
+    console.log('addToCart:', this, id);
     this.setState({
-      ...this.state,
-      selectedTitle: title
+      selectedId: id
     });
   }
 
   addBook() {
-    console.log('addBook');
     this.setState({
-      ... this.state,
       books: [ { title: 'edit me', text: 'some description'}, ...this.state.books ]
     });
-    console.log('end addBook');
+  }
+
+  removeBook(book) {
+    console.log('removeBook');
+    this.setState({
+      ...this.state,
+      books: this.state.books.filter(b => b.title !== book.title)
+    });
+  }
+
+  saveBook(id, title, author) {
+    let books = {
+      ...this.state.books,
+      [id]: { // !!!
+        ...this.state.books[id],
+        title,
+        author
+      }
+    };
+
+    this.setState({ books }) //object literal shorthand
   }
 
   render() {
@@ -85,7 +138,7 @@ class BookList extends React.Component {
         <h2>
           Cart Item: { ' ' }
           <i>
-            { this.state.selectedTitle || '- empty -' }
+            { this.state.selectedId || '- empty -' }
           </i>
         </h2>
         
@@ -94,11 +147,19 @@ class BookList extends React.Component {
         </button>
 
         <ul className='bookGrid'>
-          { this.state.books.map((book, index) => {
-            return <li key={ index } className={ this.state.selectedTitle === book.title ? 'selected' : null }>
-              <Book { ...book } addToCart={ this.addToCart.bind(this) } />
-            </li>
-          }) }
+          { Object.keys(this.state.books).map((bookId, index) => {
+              let book = this.state.books[bookId];
+              return(
+                <li key={ index } className={ this.state.selectedId === bookId ? 'selected' : null }>
+                  <Book { ...book }
+                    id={ bookId }
+                    addToCart={ this.addToCart.bind(this) }
+                    handleRemove={ this.removeBook.bind(this) }
+                    saveBook={ this.saveBook(this) }
+                  />
+                </li>);
+            })
+          }
         </ul>
       </div>
     );
