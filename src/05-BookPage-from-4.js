@@ -67,10 +67,6 @@ class BookList extends React.Component {
   }
 
   removeBook(bookId) {
-    console.log('removeBook', bookId, this, this.state);
-    console.log(this.state.books)
-    console.log(_.omit(this.state.books, bookId));
-
     this.setState({
       books: _.omit(this.state.books, bookId)
     });
@@ -89,8 +85,8 @@ class BookList extends React.Component {
           </i>
         </h2>
         <ul className='bookGrid'>
-          { Object.keys(this.props.books).map((bookId, index) => {
-            let book = this.props.books[bookId];
+          { Object.keys(this.state.books).map((bookId, index) => {
+            let book = this.state.books[bookId];
             return <li key={ index } className={ this.state.selectedId === bookId ? 'selected' : null }>
               <Book { ...book }
                 id={ bookId }
