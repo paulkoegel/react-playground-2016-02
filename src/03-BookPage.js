@@ -1,6 +1,8 @@
 import React from 'react';
 import bookListData from './data/bookList';
 
+console.log(bookListData);
+
 
 class Book extends React.Component {
   constructor(props) {
@@ -48,7 +50,9 @@ class BookList extends React.Component {
       <div>
         <h1>Book List</h1>
         <ul className='bookGrid'>
-          { this.props.books.map((book, index) => {
+          { Object.keys(this.props.books).map((bookId, index) => {
+            let book = this.props.books[bookId];
+            console.log('book:', book, bookId);
             return <li key={ index }>
               <Book {...book} />
             </li>

@@ -1,5 +1,5 @@
-export default [
-  {
+export default {
+  '1': {
     title: 'Gödel, Escher, Bach',
     author: 'Douglas R. Hofstadter',
     image: 'http://ecx.images-amazon.com/images/I/4193iI6WHqL._SY344_BO1,204,203,200_.jpg',
@@ -10,14 +10,14 @@ export default [
       In response to confusion over the book's theme, Hofstadter has emphasized that GEB is not about mathematics, art, and music but rather about how cognition and thinking emerge from well-hidden neurological mechanisms. In the book, he presents an analogy about how the individual neurons of the brain coordinate to create a unified sense of a coherent mind by comparing it to the social organization displayed in a colony of ants.`
   },
 
-  {
+  '2': {
     title: 'Structure and Interpretation of Computer Programs',
     author: 'Harold Abelson, Gerald Jay Sussman & Julie Sussman',
     image: 'https://upload.wikimedia.org/wikipedia/en/9/9d/SICP_cover.jpg',
     text: `Structure and Interpretation of Computer Programs (SICP) is a textbook aiming to teach the principles of computer programming, such as abstraction in programming, metalinguistic abstraction, recursion, interpreters, and modular programming. It is widely considered a classic text in computer science, and is colloquially known as the wizard book, due to the wizard on the jacket. It was first published in 1985 by MIT Press and written by Massachusetts Institute of Technology (MIT) professors Harold Abelson and Gerald Jay Sussman, with Julie Sussman. It was formerly used as the textbook of MIT introductory programming class and at other schools. Before SICP, the introductory courses were almost always filled with learning the details of some programming language, while SICP focuses on finding general patterns from specific problems and building software tools that embody each pattern.`
   },
 
-  {
+  '3': {
     title: 'Ulysses',
     author: 'James Joyce',
     image: 'https://upload.wikimedia.org/wikipedia/commons/c/c0/UlyssesCover.jpg',
@@ -26,7 +26,7 @@ export default [
 Ulysses chronicles the peripatetic appointments and encounters of Leopold Bloom in Dublin in the course of an ordinary day, 16 June 1904.[4] Ulysses is the Latinised name of Odysseus, the hero of Homer's epic poem Odyssey, and the novel establishes a series of parallels between the poem and the novel, with structural correspondences between the characters and experiences of Leopold Bloom and Odysseus, Molly Bloom and Penelope, and Stephen Dedalus and Telemachus, in addition to events and themes of the early twentieth century context of modernism, Dublin, and Ireland's relationship to Britain. The novel imitates registers of centuries of English literature and is highly allusive.`
   },
 
-  {
+  '4': {
     title: 'Shop Class as Soulcraft',
     author: 'Matthew B. Crawford',
     image: 'http://ecx.images-amazon.com/images/I/51PlFrZwmxL._SY344_BO1,204,203,200_.jpg',
@@ -34,4 +34,4 @@ Ulysses chronicles the peripatetic appointments and encounters of Leopold Bloom 
 
 On both economic and psychological grounds, Crawford questions the educational imperative of turning everyone into a "knowledge worker," based on a misguided separation of thinking from doing, the work of the hand from that of the mind. Crawford shows us how such a partition, which began a century ago with the assembly line, degrades work for those on both sides of the divide.`
   }
-]
+}

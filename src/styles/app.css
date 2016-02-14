@@ -51,6 +51,7 @@ button {
 .bookGrid {
   display: flex;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .bookGrid li {
@@ -58,11 +59,22 @@ button {
   outline: 1px solid #999;
   padding: 20px;
   background: #eee;
-  min-height: 522px;
-  min-width: 193px;
+  min-height: 580px;
+  width: 192px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-bottom: 20px;
+  position: relative;
 }
 
-.bookGrid li:last-child {
+.close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.bookGrid li:nth-child(4n) {
   margin-right: 0;
 }
 
