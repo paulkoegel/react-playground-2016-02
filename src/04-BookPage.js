@@ -9,18 +9,18 @@ class Book extends React.Component {
   }
 
   handleClick() {
-    this.setState({ ...this.state, expanded: !this.state.expanded });
+    this.setState({ expanded: !this.state.expanded });
   }
 
   render() {
-    let { title, author, text, image, price } = this.props;
+    let { id, title, author, text, image, price } = this.props;
     return(
-      <div className={ this.props.selected ? 'selected' : null }>
+      <div>
         <img src={ image } />
         <h1>{ title }</h1>
         <h2>{ author }</h2>
 
-        <button onClick={ () => { this.props.addToCart(title) } }>
+        <button onClick={ () => { this.props.addToCart(id) } }>
           Put in cart
         </button>
 
@@ -51,32 +51,32 @@ class BookList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTitle: null
+      selectedId: null
     };
   }
 
-  addToCart(title) {
-    console.log('addToCart:', this, title);
+  addToCart(id) {
     this.setState({
-      ...this.state,
-      selectedTitle: title
+      selectedId: id
     });
   }
 
   render() {
+    let selectedBook = this.props.books[this.state.selectedId];
     return(
       <div>
         <h1>Book List</h1>
         <h2>
           Cart Item: { ' ' }
           <i>
-            { this.state.selectedTitle || '- empty -' }
+            { (selectedBook && selectedBook.title) || '- empty -' }
           </i>
         </h2>
         <ul className='bookGrid'>
-          { this.props.books.map((book, index) => {
-            return <li key={ index } className={ this.state.selectedTitle === book.title ? 'selected' : null }>
-              <Book { ...book } addToCart={ this.addToCart.bind(this) } />
+          { Object.keys(this.props.books).map((bookId, index) => {
+            let book = this.props.books[bookId];
+            return <li key={ index } className={ this.state.selectedId === bookId ? 'selected' : null }>
+              <Book { ...book } id={ bookId } addToCart={ this.addToCart.bind(this) } />
             </li>
           }) }
         </ul>
