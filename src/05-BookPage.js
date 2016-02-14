@@ -2,9 +2,6 @@ import React from 'react';
 import bookListData from './data/bookList';
 
 
-class BookForm extends React.Component {
-}
-
 class Book extends React.Component {
 
   constructor(props) {
@@ -33,31 +30,17 @@ class Book extends React.Component {
 
   saveBook() {
     this.props.saveBook(this.props.id, this.refs.title.value, this.refs.author.value)
-    this.setState({ editing: false });
+    //this.setState({ editing: false });
   }
 
   render() {
-    let { title, author, text, image, price } = this.props;
+    let { id, title, author, text, image, price } = this.props;
     return(
       // multiple classes: className={ [ (this.props.selected ? 'selected' : null), (this.state.fadeOut ? 'fadeOut' : null) ].join(' ') }
-      <div className={ this.props.selected ? 'selected' : null }>
+      <div>
         <img src={ image } />
-        { /*{ this.props.editing ?
-          <div>
-            <h1 onClick={ enterEditMode.bind(this) }>{ title }</h1>
-            <h2 onClick={ enterEditMode.bind(this) }>{ author }</h2>
-          </div>
-          :
-          <div>
-            <input ref='title' onChange={ this.changeTitle.bind(this) } defaultValue={ this.props.title } type='text' />
-            <input ref='author' onChange={ this.changeAuthor.bind(this) } defaultValue={ this.props.author } type='text' />
-            { <button onClick={ this.saveBook.bind(this) }>Save</button> }
-            { { this.state.isValid && <button onClick={ this.saveBook.bind(this) }>Save</button> } }
-          </div>
-         }
-  */ }
-
-        <button onClick={ () => { this.props.addToCart(title) } }>
+        
+        <button onClick={ () => { this.props.addToCart(id) } }>
           Put in cart
         </button>
 
