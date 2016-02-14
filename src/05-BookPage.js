@@ -30,11 +30,9 @@ class Book extends React.Component {
   renderTitleAndAuthor() {
     if(this.state.editing) {
       return <div>
-        { /* onChange={ this.changeTitle.bind(this) } -- for input validations */ }
-        <input ref='title' defaultValue={ this.props.title } type='text' />
+        <input ref='title' defaultValue={ this.props.title } type='text' /> {/* !!! what happens with `value=`? */ }
         <input ref='author' defaultValue={ this.props.author } type='text' />
         <button onClick={ this.saveBook.bind(this) }>Save</button>
-        { /*  this.state.isValid && <button onClick={ this.saveBook.bind(this) }>Save</button> } */ }
       </div>
 
     } else {
@@ -79,7 +77,7 @@ Book.propTypes = {
   author: React.PropTypes.string,
   price: React.PropTypes.number,
   image: React.PropTypes.string,
-  text: React.PropTypes.string // isRequired
+  text: React.PropTypes.string.isRequired
 };
 
 
@@ -168,6 +166,9 @@ class BookList extends React.Component {
     );
   }
 }
+
+// TODO:
+// validate that titles aren't longer than 50 characters
 
 
 export default () => {
