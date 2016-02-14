@@ -67,9 +67,16 @@ class BookList extends React.Component {
   }
 
   addBook() {
-    // this.setState({
-    //   books: { { title: 'edit me', text: 'some description'}, ...this.state.books ]
-    // });
+    this.setState({ // !!! need to repeat this.state.books - automerge doesn't work for nested structures
+      books: {
+        ...this.state.books,
+        [this.state.books.length + 1]: {
+          title: 'edit me',
+          author: 'John Doe',
+          text: 'some description'
+        }
+      }
+    });
   }
 
   removeBook(bookId) {
@@ -92,6 +99,11 @@ class BookList extends React.Component {
             { (selectedBook && selectedBook.title) || '- empty -' }
           </i>
         </h2>
+
+        <button className='addBook' onClick={ this.addBook.bind(this) }>
+          Add Book
+        </button>
+
         <ul className='bookGrid'>
           { sortedBookIDs.map((bookId, index) => {
               let book = this.state.books[bookId];
