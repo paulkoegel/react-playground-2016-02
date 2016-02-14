@@ -1,45 +1,59 @@
 import React from 'react';
 import bookListData from './data/bookList';
+import _ from 'lodash';
 
 
 class Book extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      editing: false,
+      expanded: false
+    };
   }
 
   handleClick() {
     this.setState({ expanded: !this.state.expanded });
   }
 
-  changeTitle({ target: { value } }) {
-    return;
-    // this.setState({
-    //   isValid: value <= 50
-    // });
-  }
-
-  changeAuthor({ target: { value } }) {
-    return;
-  }
-
   enterEditMode() {
+    console.log('enterEditMode');
     this.setState({ editing: true });
   }
 
   saveBook() {
-    this.props.saveBook(this.props.id, this.refs.title.value, this.refs.author.value)
-    //this.setState({ editing: false });
+    this.setState({ editing: false });
+    this.props.saveBook(this.props.id, this.refs.title.value, this.refs.author.value);
+  }
+
+  renderTitleAndAuthor() {
+    if(this.state.editing) {
+      return <div>
+        { /* onChange={ this.changeTitle.bind(this) } -- for input validations */ }
+        <input ref='title' defaultValue={ this.props.title } type='text' />
+        <input ref='author' defaultValue={ this.props.author } type='text' />
+        <button onClick={ this.saveBook.bind(this) }>Save</button>
+        { /*  this.state.isValid && <button onClick={ this.saveBook.bind(this) }>Save</button> } */ }
+      </div>
+
+    } else {
+      return <div>
+        <h1 onClick={ this.enterEditMode.bind(this) }>{ this.props.title }</h1>
+        <h2 onClick={ this.enterEditMode.bind(this) }>{ this.props.author }</h2>
+      </div>
+    }
   }
 
   render() {
     let { id, title, author, text, image, price } = this.props;
+    console.log('editing?', this.state.editing);
     return(
-      // multiple classes: className={ [ (this.props.selected ? 'selected' : null), (this.state.fadeOut ? 'fadeOut' : null) ].join(' ') }
       <div>
-        <img src={ image } />
+        <img src={ image || 'http://placekitten.com/150/110' } />
+        { this.renderTitleAndAuthor.bind(this)() }
         
+
         <button onClick={ () => { this.props.addToCart(id) } }>
           Put in cart
         </button>
@@ -48,8 +62,8 @@ class Book extends React.Component {
         <p onClick={ this.handleClick.bind(this) }>
           { this.state.expanded ? text : `${text.slice(0,140)} ...` }
         </p>
-        <div className='close' onClick={ () => this.props.handleRemove(this.props) }>
-          x
+        <div className='close' onClick={ () => this.props.handleRemove(id) }>
+           x
         </div>
       </div>
     );
@@ -65,7 +79,7 @@ Book.propTypes = {
   author: React.PropTypes.string,
   price: React.PropTypes.number,
   image: React.PropTypes.string,
-  text: React.PropTypes.string.isRequired
+  text: React.PropTypes.string // isRequired
 };
 
 
@@ -75,29 +89,33 @@ class BookList extends React.Component {
     super(props);
     this.state = {
       selectedId: null,
-      showForm: false,
-      books: props.books
+      books: props.books // !!!
     };
   }
 
   addToCart(id) {
-    console.log('addToCart:', this, id);
     this.setState({
       selectedId: id
     });
   }
 
   addBook() {
-    this.setState({
-      books: [ { title: 'edit me', text: 'some description'}, ...this.state.books ]
+    console.log(this.state, this.state.books.length + 1);
+    this.setState({ // !!! need to repeat this.state.books - automerge doesn't work for nested structures
+      books: {
+        ...this.state.books,
+        [Object.keys(this.state.books).length + 1]: {
+          title: 'edit me',
+          author: 'John Doe',
+          text: 'some description'
+        }
+      }
     });
   }
 
-  removeBook(book) {
-    console.log('removeBook');
+  removeBook(bookId) {
     this.setState({
-      ...this.state,
-      books: this.state.books.filter(b => b.title !== book.title)
+      books: _.omit(this.state.books, bookId)
     });
   }
 
@@ -115,33 +133,35 @@ class BookList extends React.Component {
   }
 
   render() {
+    const selectedBook = this.state.books[this.state.selectedId];
+    const sortedBookIDs = _.sortBy(Object.keys(this.state.books).map(bookId => parseInt(bookId, 10)), el => el).reverse();
+
     return(
       <div>
         <h1>Book List</h1>
         <h2>
           Cart Item: { ' ' }
           <i>
-            { this.state.selectedId || '- empty -' }
+            { (selectedBook && selectedBook.title) || '- empty -' }
           </i>
         </h2>
-        
+
         <button className='addBook' onClick={ this.addBook.bind(this) }>
           Add Book
         </button>
 
         <ul className='bookGrid'>
-          { Object.keys(this.state.books).map((bookId, index) => {
+          { sortedBookIDs.map((bookId, index) => {
               let book = this.state.books[bookId];
-              return(
-                <li key={ index } className={ this.state.selectedId === bookId ? 'selected' : null }>
-                  <Book { ...book }
-                    id={ bookId }
-                    addToCart={ this.addToCart.bind(this) }
-                    handleRemove={ this.removeBook.bind(this) }
-                    saveBook={ this.saveBook(this) }
-                  />
-                </li>);
-            })
+              return <li key={ index } className={ this.state.selectedId === bookId ? 'selected' : null }>
+                <Book { ...book }
+                  id={ bookId }
+                  addToCart={ this.addToCart.bind(this) }
+                  handleRemove={ this.removeBook.bind(this) }
+                  saveBook={ this.saveBook.bind(this) }
+                />
+              </li>
+            }) 
           }
         </ul>
       </div>
